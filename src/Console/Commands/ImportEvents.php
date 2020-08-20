@@ -3,6 +3,7 @@
 namespace Czemu\NovaCalendarTool\Console\Commands;
 
 use Illuminate\Console\Command;
+use Carbon\Carbon;
 use Czemu\NovaCalendarTool\Models\Event;
 use Spatie\GoogleCalendar\Event as GoogleEvent;
 
@@ -39,38 +40,35 @@ class ImportEvents extends Command
      */
     public function handle()
     {
-        try
-        {
+        try {
             $googleEvents = GoogleEvent::get();
 
-            if (count($googleEvents))
-            {
-                foreach ($googleEvents as $googleEvent)
-                {
+            if (count($googleEvents)) {
+                foreach ($googleEvents as $googleEvent) {
                     $event = Event::where('google_calendar_id', $googleEvent->id)->first();
                     $googleEvent = $googleEvent->googleEvent;
 
-                    if (is_null($event))
-                    {
+                    if (is_null($event)) {
+
+                        $start = Carbon::createFromTimestamp(strtotime($googleEvent->start->dateTime));
+                        $end = Carbon::createFromTimestamp(strtotime($googleEvent->end->dateTime));
+
+
                         Event::create([
                             'google_calendar_id' => $googleEvent->id,
-                            'title' => ! empty($googleEvent->summary) ? $googleEvent->summary : 'Unnamed event',
-                            'start' => ! empty($googleEvent->start->dateTime) ? $googleEvent->start->dateTime : $googleEvent->start->date,
-                            'end' => ! empty($googleEvent->end->dateTime) ? $googleEvent->end->dateTime : $googleEvent->end->date
+                            'title' => !empty($googleEvent->summary) ? $googleEvent->summary : 'Unnamed event',
+                            'start' => !empty($start) ? $start : $googleEvent->start->date,
+                            'end' => !empty($end) ? $end : $googleEvent->end->date
                         ]);
 
-                        $this->line('Imported event ID: '.$googleEvent->id);
-                    }
-                    else
-                    {
-                        $this->line('Event ID: '.$googleEvent->id.' already exists, skipping.');
+                        $this->line('Imported event ID: ' . $googleEvent->id);
+                    } else {
+                        $this->line('Event ID: ' . $googleEvent->id . ' already exists, skipping.');
                     }
                 }
             }
-        }
-        catch (\Google_Service_Exception $e)
-        {
-            $this->line('An error occurred while fetching events from Google Calendar: '.$e->getMessage());
+        } catch (\Google_Service_Exception $e) {
+            $this->line('An error occurred while fetching events from Google Calendar: ' . $e->getMessage());
         }
     }
 }
