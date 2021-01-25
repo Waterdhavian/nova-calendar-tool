@@ -11,11 +11,12 @@ class EventsController
     public function index(Request $request)
     {
         $user = Auth::user();
-        $events = Event::where('user_id', $user->id)
-            ->OrWhere('company_id', $user->company->id)
-            ->filter($request->query())
-            ->get(['id', 'title', 'start', 'end'])
-            ->toJson();
+        $query = Event::where('user_id', $user->id)->filter($request->query());
+        if($user->company) {
+            $query->OrWhere('company_id', $user->company->id);
+        }
+
+        $events = $query->get(['id', 'title', 'start', 'end'])->toJson();
 
         return response($events);
     }
