@@ -1,14 +1,14 @@
 <?php
 
-namespace Czemu\NovaCalendarTool;
+namespace Waterdhavian\NovaCalendarTool;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
-use Czemu\NovaCalendarTool\Http\Middleware\Authorize;
-use Czemu\NovaCalendarTool\Models\Event;
-use Czemu\NovaCalendarTool\Observers\EventObserver;
+use Waterdhavian\NovaCalendarTool\Http\Middleware\Authorize;
+use Waterdhavian\NovaCalendarTool\Models\Event;
+use Waterdhavian\NovaCalendarTool\Observers\EventObserver;
 
 class ToolServiceProvider extends ServiceProvider
 {

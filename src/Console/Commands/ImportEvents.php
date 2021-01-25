@@ -1,10 +1,10 @@
 <?php
 
-namespace Czemu\NovaCalendarTool\Console\Commands;
+namespace Waterdhavian\NovaCalendarTool\Console\Commands;
 
 use Illuminate\Console\Command;
 use Carbon\Carbon;
-use Czemu\NovaCalendarTool\Models\Event;
+use Waterdhavian\NovaCalendarTool\Models\Event;
 use Spatie\GoogleCalendar\Event as GoogleEvent;
 
 class ImportEvents extends Command

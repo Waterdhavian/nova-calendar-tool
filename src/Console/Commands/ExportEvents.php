@@ -1,9 +1,9 @@
 <?php
 
-namespace Czemu\NovaCalendarTool\Console\Commands;
+namespace Waterdhavian\NovaCalendarTool\Console\Commands;
 
 use Illuminate\Console\Command;
-use Czemu\NovaCalendarTool\Models\Event;
+use Waterdhavian\NovaCalendarTool\Models\Event;
 use Spatie\GoogleCalendar\Event as GoogleEvent;
 
 class ExportEvents extends Command

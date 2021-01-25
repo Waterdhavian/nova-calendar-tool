@@ -1,8 +1,8 @@
 <?php
 
-namespace Czemu\NovaCalendarTool\Http\Controllers;
+namespace Waterdhavian\NovaCalendarTool\Http\Controllers;
 
-use Czemu\NovaCalendarTool\Models\Event;
+use Waterdhavian\NovaCalendarTool\Models\Event;
 use Illuminate\Http\Request;
 
 class EventsController

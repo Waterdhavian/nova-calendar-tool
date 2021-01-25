@@ -1,8 +1,8 @@
 <?php
 
-namespace Czemu\NovaCalendarTool\Observers;
+namespace Waterdhavian\NovaCalendarTool\Observers;
 
-use Czemu\NovaCalendarTool\Models\Event;
+use Waterdhavian\NovaCalendarTool\Models\Event;
 use Spatie\GoogleCalendar\Event as GoogleEvent;
 
 class EventObserver
