@@ -20,6 +20,7 @@
 
 <script>
     import FullCalendar from '@fullcalendar/vue';
+    import nl from '@fullcalendar/core/locales/nl';
     import dayGridPlugin from '@fullcalendar/daygrid';
     import interactionPlugin from '@fullcalendar/interaction';
     import EventModal from './EventModal';
@@ -41,7 +42,8 @@
                         hour: '2-digit',
                         minute: '2-digit',
                         meridiem: false
-                    }
+                    },
+                    locale: nl
                 },
                 currentEvent: null,
                 currentDate: null,
