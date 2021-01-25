@@ -18,12 +18,12 @@ This is a package for [Laravel Nova](https://nova.laravel.com/) which allows you
 Install the package via composer:
 
 ```
-composer require czemu/nova-calendar-tool
+composer require waterdhavian/nova-calendar-tool
 ```
 
 Publish the migration:
 ```
-php artisan vendor:publish --provider='Czemu\NovaCalendarTool\ToolServiceProvider' --tag="migrations"
+php artisan vendor:publish --provider='Waterdhavian\NovaCalendarTool\ToolServiceProvider' --tag="migrations"
 ```
 
 Run the migration:
@@ -41,7 +41,7 @@ public function tools()
 {
     return [
         // ...
-        new \Czemu\NovaCalendarTool\NovaCalendarTool,
+        new \Waterdhavian\NovaCalendarTool\NovaCalendarTool,
     ];
 }
 ```
