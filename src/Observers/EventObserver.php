@@ -2,6 +2,7 @@
 
 namespace Waterdhavian\NovaCalendarTool\Observers;
 
+use Illuminate\Support\Facades\Auth;
 use Waterdhavian\NovaCalendarTool\Models\Event;
 use Spatie\GoogleCalendar\Event as GoogleEvent;
 
@@ -15,11 +16,18 @@ class EventObserver
      */
     public function created(Event $event)
     {
+        $gid = Auth::user()->google_calendar_id;
+        if(empty($gid) && Auth::user()->company && Auth::user()->company->google_calendar_id) {
+            $gid = Auth::user()->company->google_calendar_id;
+        } else if(empty($gid)) {
+            $gid = config('google-calendar.calendar_id');
+        }
+
         $googleEvent = GoogleEvent::create([
             'name' => $event->title,
             'startDateTime' => $event->start,
             'endDateTime' => $event->end
-        ]);
+        ], $gid);
 
         if ( ! empty($googleEvent->googleEvent->id))
         {
@@ -39,7 +47,14 @@ class EventObserver
     {
         if ( ! empty($event->google_calendar_id))
         {
-            $googleEvent = GoogleEvent::find($event->google_calendar_id);
+            $gid = Auth::user()->google_calendar_id;
+            if(empty($gid) && Auth::user()->company && Auth::user()->company->google_calendar_id) {
+                $gid = Auth::user()->company->google_calendar_id;
+            } else if(empty($gid)) {
+                $gid = config('google-calendar.calendar_id');
+            }
+
+            $googleEvent = GoogleEvent::find($event->google_calendar_id, $gid);
 
             if ( ! empty($googleEvent))
             {
@@ -62,7 +77,14 @@ class EventObserver
     {
         if ( ! empty($event->google_calendar_id))
         {
-            $googleEvent = GoogleEvent::find($event->google_calendar_id);
+            $gid = Auth::user()->google_calendar_id;
+            if(empty($gid) && Auth::user()->company && Auth::user()->company->google_calendar_id) {
+                $gid = Auth::user()->company->google_calendar_id;
+            } else if(empty($gid)) {
+                $gid = config('google-calendar.calendar_id');
+            }
+
+            $googleEvent = GoogleEvent::find($event->google_calendar_id, $gid);
 
             if ( ! empty($googleEvent))
             {

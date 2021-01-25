@@ -2,6 +2,7 @@
 
 namespace Waterdhavian\NovaCalendarTool\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Waterdhavian\NovaCalendarTool\Models\Event;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,10 @@ class EventsController
 {
     public function index(Request $request)
     {
-        $events = Event::filter($request->query())
+        $user = Auth::user();
+        $events = Event::where('user_id', $user->id)
+            ->OrWhere('company_id', $user->company->id)
+            ->filter($request->query())
             ->get(['id', 'title', 'start', 'end'])
             ->toJson();
 
@@ -23,6 +27,14 @@ class EventsController
         if ($validation->passes())
         {
             $event = Event::create($request->input());
+
+            if(Auth::user()->company && Auth::user()->company->google_calendar_id) {
+                $event->company_id = Auth::user()->company_id;
+                $event->save();
+            } else {
+                $event->user_id = Auth::user()->id;
+                $event->save();
+            }
 
             if ($event)
             {

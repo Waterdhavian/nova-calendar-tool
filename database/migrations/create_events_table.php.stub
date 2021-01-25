@@ -16,10 +16,16 @@ class CreateEventsTable extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('google_calendar_id')->nullable();
+            $table->integer('user_id')->unsigned();
+            $table->integer('company_id')->unsigned();
             $table->string('title');
             $table->timestamp('start')->nullable();
             $table->timestamp('end')->nullable();
             $table->timestamps();
+
+            $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('user_id')->references('id')->on('users');
+
         });
     }
 

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
+use Waterdhavian\NovaCalendarTool\Console\Commands\ExportEvents;
+use Waterdhavian\NovaCalendarTool\Console\Commands\ImportEvents;
 use Waterdhavian\NovaCalendarTool\Http\Middleware\Authorize;
 use Waterdhavian\NovaCalendarTool\Models\Event;
 use Waterdhavian\NovaCalendarTool\Observers\EventObserver;
@@ -54,8 +56,8 @@ class ToolServiceProvider extends ServiceProvider
                 ->group(__DIR__.'/../routes/api.php');
 
         $this->commands([
-            \Waterdhavian\NovaCalendarTool\Console\Commands\ImportEvents::class,
-            \Waterdhavian\NovaCalendarTool\Console\Commands\ExportEvents::class
+            ImportEvents::class,
+            ExportEvents::class
         ]);
     }
 
