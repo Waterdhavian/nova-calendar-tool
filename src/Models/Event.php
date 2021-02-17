@@ -14,6 +14,8 @@ class Event extends Model
 
     protected $guarded = ['id'];
 
+    protected $table = 'calendar_events';
+
     public function validate($data, $scenario)
     {
         switch ($scenario)
